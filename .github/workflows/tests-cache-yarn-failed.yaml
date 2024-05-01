@@ -1,0 +1,35 @@
+on:
+    workflow_dispatch:
+
+jobs:
+    test_matrix:
+        timeout-minutes: 1
+        strategy:
+            fail-fast: false
+            matrix:
+                package-manager:
+                    - npm@10.7.0
+                    - yarn@4.1.1
+                pre-actions-setup-node:
+                    - ':'
+                    - corepack enable
+                actions-setup-node-cache:
+                    - ''
+                    - npm
+                    - yarn
+                exclude:
+                    - package-manager: npm@10.7.0
+                      actions-setup-node-cache: yarn
+                    - package-manager: yarn@4.1.1
+                      actions-setup-node-cache: npm
+
+        runs-on: ubuntu-22.04
+        steps:
+            - uses: actions/checkout@v4
+            - run: sed --in-place --regexp-extended 's/("packageManager":\s*")[^"]+/\1${{ matrix.package-manager }}/' package.json
+            - run: ${{ matrix.pre-actions-setup-node }}
+            - uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+                cache: ${{ matrix.actions-setup-node-cache }}
+            - run: corepack enable

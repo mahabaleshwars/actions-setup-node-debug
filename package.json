@@ -1,0 +1,10 @@
+{
+	"private": false,
+	"name": "@esperecyan/actions-setup-node-debug",
+	"license": "CC0-1.0",
+	"author": {
+		"name": "100の人",
+		"url": "https://github.com/esperecyan/actions-setup-node-debug"
+	},
+	"packageManager": "npm@10.7.0"
+}
