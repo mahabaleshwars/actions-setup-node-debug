@@ -28,8 +28,10 @@ jobs:
             - uses: actions/checkout@v4
             - run: sed --in-place --regexp-extended 's/("packageManager":\s*")[^"]+/\1${{ matrix.package-manager }}/' package.json
             - run: ${{ matrix.pre-actions-setup-node }}
+            - id: pkgmgr
+              run: echo "::set-output name=manager::$(echo ${{ matrix.package-manager }} | cut -d '@' -f1)"
             - uses: actions/setup-node@v4
               with:
                 node-version: '20'
-                cache: ${{ matrix.package-manager.split('@')[0] }}
+                cache: ${{ steps.pkgmgr.outputs.manager }}
             - run: corepack enable
