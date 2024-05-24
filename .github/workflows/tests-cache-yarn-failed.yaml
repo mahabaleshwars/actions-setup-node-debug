@@ -32,5 +32,5 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                 node-version: '20'
-                corepack: false
                 cache: ${{ matrix.actions-setup-node-cache }}
+            - run: corepack disable
