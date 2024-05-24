@@ -29,8 +29,8 @@ jobs:
             - run: sed --in-place --regexp-extended 's/("packageManager":\s*")[^"]+/\1${{ matrix.package-manager }}/' package.json
             - run: ${{ matrix.pre-actions-setup-node }}
             - run: corepack enable
-            - run: corepack disable
             - uses: actions/setup-node@v4
               with:
                 node-version: '20'
+                corepack: false
                 cache: ${{ matrix.actions-setup-node-cache }}
