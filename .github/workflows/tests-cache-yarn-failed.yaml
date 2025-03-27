@@ -34,4 +34,11 @@ jobs:
               with:
                 node-version: '20'
                 cache: ${{ matrix.actions-setup-node-cache }}
+            - name: Ensure cache paths exist
+              run: |
+                if [ "${{ matrix.actions-setup-node-cache }}" == "npm" ]; then
+                  mkdir -p ~/.npm
+                elif [ "${{ matrix.actions-setup-node-cache }}" == "yarn" ]; then
+                  mkdir -p ~/.cache/yarn
+                fi
             - run: corepack enable
