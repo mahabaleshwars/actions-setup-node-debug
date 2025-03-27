@@ -27,6 +27,8 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - run: sed --in-place --regexp-extended 's/("packageManager":\s*")[^"]+/\1${{ matrix.package-manager }}/' package.json
+            - name: Update corepack
+              run: sudo npm install -g corepack
             - run: ${{ matrix.pre-actions-setup-node }}
             - uses: actions/setup-node@v4
               with:
