@@ -1,0 +1,23 @@
+name: Test Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup cache
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'yarn'
+    - name: Prepare dependencies
+      id: prepare-dependencies
+      run: |
+        echo "Install latest yarn..."
+        npm install -g yarn@latest
+        echo "Check that we're running latest yarn..."
+        which yarn 
+        mkdir ./dist
+        yarn install --immutable
